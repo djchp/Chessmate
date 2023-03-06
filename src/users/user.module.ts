@@ -10,7 +10,6 @@ import { UserService } from './user.service';
     ConfigModule,
     TypeOrmModule.forFeature([User])
   ],
-  controllers: [],
   providers: [UserService,UserRepository],
   exports: [UserService]
 })
