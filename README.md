@@ -1,6 +1,6 @@
 ## Description
 
-Chess based social media web app.
+Chess based social media web app. Check backend and frontend branch for code
 
 
 <p align="center">
