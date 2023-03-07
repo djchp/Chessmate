@@ -1,5 +1,7 @@
+import { Exclude } from 'class-transformer';
+import { Meet } from 'src/meet/meet.entity';
 import { Profile } from 'src/profile/profile.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -9,7 +11,8 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({select: false})
+  @Exclude()
   password: string;
 
   @Column()
@@ -18,5 +21,8 @@ export class User {
   @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()
   profile: Profile;
+
+  @ManyToMany(() => Meet, (meet) => meet.users)
+  meets: Meet[]
 
 }

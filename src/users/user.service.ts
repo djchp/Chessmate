@@ -23,7 +23,7 @@ export class UserService {
   }
   async validateUser(cred: logInDto) {
     const { email, password: givenPassword } = cred;
-    const user = await this.userRepository.findOne({ where: { email: email } });
+    const user = await this.userRepository.findOne({ where: { email: email }, select: ['email','password','id'] });
     if (!user) {
       throw new NotFoundException('user with this email not found');
     }
