@@ -24,10 +24,10 @@ export class UserService {
   async validateUser(cred: logInDto) {
     const { email, password: givenPassword } = cred;
     const user = await this.userRepository.findOne({ where: { email: email } });
-    const { password, ...rest } = user;
     if (!user) {
       throw new NotFoundException('user with this email not found');
     }
+    const { password, ...rest } = user;
     const passwordIsValid = await bcrypt.compare(givenPassword, password);
     if (!passwordIsValid) {
       throw new UnauthorizedException('Password wrong');
@@ -42,7 +42,7 @@ export class UserService {
   async getAllUsers() {
     const users = await this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email', 'user.id'])
+      .select(['user.email', 'user.id','user.username'])
       .getMany();
     return users;
   }
@@ -50,8 +50,9 @@ export class UserService {
   async createUser(req: createUserDto) {
     await this.validateEmail(req);
     const user = this.userRepository.create({
-      email: req.email,
       password: await bcrypt.hash(req.password, 10),
+      email: req.email,
+      username: req.username
     });
     const { password, ...rest } = await this.userRepository.save(user);
     return rest;

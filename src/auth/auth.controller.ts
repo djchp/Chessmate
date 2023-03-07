@@ -16,6 +16,7 @@ export class AuthController {
     return this.authService.signUp(req);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getUsers() {
     return this.authService.getUsers();

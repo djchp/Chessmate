@@ -13,7 +13,6 @@ export class Profile {
     @Column({nullable: true})
     avatar?: string
 
-    // @Column({nullable: true})
     @OneToOne(() => User,(user)=> user.profile)
     user: User
 

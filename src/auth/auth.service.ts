@@ -29,7 +29,7 @@ export class AuthService {
     expires.setSeconds(
       this.configService.get('JWT_EXPIRATION'),
     );
-    const at = this.jwtService.sign({ user: user.id });
+    const at = this.jwtService.sign({user: user});
 
     res.cookie('Authentication', at, {
       httpOnly: true,
